@@ -9,24 +9,24 @@ import { LayoutDashboard, FileText, Users, PenTool, BarChart3, Settings } from "
 const sidebarItems = [
   {
     title: "Proposals",
-    href: "/proposals",
+    href: "/dashboard/proposals",
     icon: FileText,
   },
   {
     title: "Leads",
-    href: "/leads",
+    href: "/dashboard/leads",
     icon: Users,
     disabled: true,
   },
   {
     title: "Design",
-    href: "/design",
+    href: "/dashboard/design",
     icon: PenTool,
     disabled: true,
   },
   {
     title: "Synthesis",
-    href: "/synthesis",
+    href: "/dashboard/synthesis",
     icon: BarChart3,
     disabled: true,
   },

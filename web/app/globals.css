@@ -117,10 +117,22 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+
+
+@theme inline {
+  --color-brand-dark: #000000;
+  --color-brand-gray: #121212;
+  --color-brand-accent: #3B82F6;
+  /* Electric Blue */
+  --color-brand-muted: #A1A1AA;
+}
+
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }

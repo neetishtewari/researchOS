@@ -2,7 +2,7 @@
 
 import { useCallback } from "react"
 import { useCompletion } from "@ai-sdk/react"
-import { ContextUpload } from "@/components/proposals/context-upload"
+import { ProposalWizard } from "@/components/proposals/proposal-wizard"
 import { Loader2 } from "lucide-react"
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
@@ -12,7 +12,7 @@ export default function ProposalsPage() {
         api: "/api/proposals/generate",
     })
 
-    // We wrap complete in a handler to match the signature expected by ContextUpload
+    // We wrap complete in a handler to match the signature expected by ProposalWizard
     const handleGenerate = useCallback((content: string) => {
         complete(content)
     }, [complete])
@@ -26,16 +26,16 @@ export default function ProposalsPage() {
                 </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="space-y-6">
-                    <ContextUpload onContentReady={handleGenerate} isGenerating={isLoading} />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-[calc(100vh-12rem)]">
+                <div className="h-full">
+                    <ProposalWizard onContentReady={handleGenerate} isGenerating={isLoading} />
                 </div>
 
                 {/* Output Area */}
-                <div className="space-y-6">
+                <div className="h-full overflow-hidden flex flex-col">
                     {completion || isLoading ? (
-                        <div className="rounded-lg border bg-card p-6 shadow-sm min-h-[500px]">
-                            <div className="flex items-center justify-between mb-4 border-b pb-2">
+                        <div className="rounded-lg border bg-card shadow-sm h-full flex flex-col overflow-hidden">
+                            <div className="flex items-center justify-between p-6 border-b shrink-0">
                                 <h2 className="text-xl font-semibold">Draft Proposal</h2>
                                 {isLoading && (
                                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -44,15 +44,18 @@ export default function ProposalsPage() {
                                     </div>
                                 )}
                             </div>
-                            <div className="prose dark:prose-invert max-w-none prose-headings:font-semibold prose-h2:text-xl prose-h3:text-lg">
+                            <div className="p-6 overflow-y-auto flex-1 prose dark:prose-invert max-w-none prose-headings:font-semibold prose-h2:text-xl prose-h3:text-lg">
                                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                                     {completion}
                                 </ReactMarkdown>
                             </div>
                         </div>
                     ) : (
-                        <div className="rounded-lg border border-dashed p-12 text-center text-muted-foreground h-full flex items-center justify-center">
-                            <p>Generated proposal will appear here.</p>
+                        <div className="rounded-lg border border-dashed p-12 text-center text-muted-foreground h-full flex items-center justify-center bg-muted/20">
+                            <div>
+                                <h3 className="font-semibold text-lg mb-2">No Proposal Generated</h3>
+                                <p>Complete the wizard on the left to generate your first draft.</p>
+                            </div>
                         </div>
                     )}
                 </div>
